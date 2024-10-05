@@ -5,7 +5,8 @@ const DB_URL = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${proc
 
 async function connect() {
     try {
-        await mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+        // No need to pass `useNewUrlParser` and `useUnifiedTopology`
+        await mongoose.connect(DB_URL);
         console.log("Connected to MongoDB");
     } catch (e) {
         console.error("Connection error:", e);
@@ -14,11 +15,6 @@ async function connect() {
 
 connect();
 
-const UserSchema = new mongoose.Schema({
-    email: String,
-    password: String
-});
 
-const User = mongoose.model("User", UserSchema); // Use `mongoose.model` for model creation
 
-module.exports = { User };
+module.exports = { mongoose };
