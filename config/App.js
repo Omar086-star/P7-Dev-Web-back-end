@@ -32,4 +32,3 @@ app.use("/uploads", express.static(path.join(__dirname, '../uploads')))
 
 module.exports = { app };
 
-// https://github.com/Omar086-star/P7-Dev-Web-back-end.git

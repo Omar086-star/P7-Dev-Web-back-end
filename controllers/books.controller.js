@@ -33,11 +33,14 @@ const jwt = require("jsonwebtoken");
 
 const booksRouter = express.Router();
 booksRouter.get("/bestrating", getBestRating);
+
 booksRouter.get("/:id", getBookById);
+
 booksRouter.get("/", getBooks);
 booksRouter.post("/", checkToken, upload.single('image'), postBook);
 booksRouter.delete("/:id", checkToken, deleteBook);
 booksRouter.put("/:id", checkToken,upload.single('image'),  putBook);
+
 booksRouter.post("/:id/rating", checkToken, postRating);
 
 const app = express();
@@ -79,10 +82,9 @@ rating.userId == userId);
 }
 
 function calculateAverageRating(ratings) {
-   const sumOfAllGrades = ratings.reduce((sum, rating) => sum +
+const sumOfAllGrades = ratings.reduce((sum, rating) => sum +
 rating.grade, 0);
-   return sumOfAllGrades / ratings.length;
-
+return sumOfAllGrades / ratings.length;
 }
 
 async function getBestRating(req, res) {
@@ -96,6 +98,7 @@ console.log(booksRating)
 } }
 
 async function putBook(req, res) {
+
   const id = req.params.id;
   upload.single('image')(req, res, async function (err) {
     if (err instanceof multer.MulterError) {
@@ -116,6 +119,7 @@ async function putBook(req, res) {
       if (userIdInDb !== userIdInToken) {
         return res.status(403).json({ message: "You cannot modify other people's books" });
       }
+      
       const updatedBook = {
         title: bookData.title || bookInDb.title,
         author: bookData.author || bookInDb.author,
